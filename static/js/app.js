@@ -3,20 +3,26 @@ var tableData = data;
 
 //reference the table body
 var tbody = d3.select("tbody");
+var table = d3.select("#ufo-table");
+
 
 //use a for each to loop through the data.js file and add in the text into the table body
-data.forEach(function(ufoSightings) {
-    console.log(ufoSightings)
-    var row = tbody.append("tr");
+function createTable(data) {
+    tbody.html("");
+    data.forEach(function(ufoSightings) {
+        console.log(ufoSightings)
+        var row = tbody.append("tr");
 
-    Object.entries(ufoSightings).forEach(function([key,value]) {
-        console.log(key, value);
-        // append the cell to a row for each value in the object
-        var cell = row.append("td");
-        cell.text(value);
+        Object.entries(ufoSightings).forEach(function([key,value]) {
+            console.log(key, value);
+            // append the cell to a row for each value in the object
+            var cell = row.append("td");
+            cell.text(value);
+        });
     });
-});
+};
 
+createTable(tableData);
 
 //form filter
 //select button and form
@@ -43,4 +49,6 @@ function runEnter() {
     //use the filter to filter the data by date
     var filteredData = tableData.filter(ufoSightings => ufoSightings.datetime === inputValue);
     console.log(filteredData);
+
+    createTable(filteredData)
 };
